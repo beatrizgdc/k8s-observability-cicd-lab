@@ -68,6 +68,12 @@ curl -s http://127.0.0.1:3000/api/health                   # Grafana
 ./lab.sh urls                                              # todos os endereços e credenciais locais
 ```
 
+Imagens:
+<img width="645" height="337" alt="image" src="https://github.com/user-attachments/assets/cc34fbd5-1a63-4f7d-ac8c-4e183643201b" />
+<img width="1387" height="150" alt="image" src="https://github.com/user-attachments/assets/6a1dbbe1-40cb-4c7d-9534-4464d16aaed0" />
+<img width="829" height="98" alt="image" src="https://github.com/user-attachments/assets/d70d9dcb-167c-4fbf-bcc2-3086b88db9f0" />
+
+
 ## Sequência recomendada de estudo (um dia)
 | Hora | Tema | Documento | Exercícios |
 |---|---|---|---|
