@@ -1,6 +1,6 @@
 # DevOps Interview Lab
 
-Laboratório **local e gratuito** para estudar, em um dia, os temas de uma entrevista de DevOps/SRE/Cloud: Linux, Kubernetes/AKS, troubleshooting, CI/CD (Jenkins), Terraform, observabilidade (Golden Signals), segurança/qualidade (SonarQube, Trivy, Snyk) e conceitos AWS/Azure.
+Laboratório **local e gratuito** para estudar, temas de DevOps/SRE/Cloud: Linux, Kubernetes/AKS, troubleshooting, CI/CD (Jenkins), Terraform, observabilidade (Golden Signals), segurança/qualidade (SonarQube, Trivy, Snyk) e conceitos AWS/Azure.
 
 - Sem conta em nenhum serviço, sem cartão, sem nuvem. Tudo roda no seu computador (Docker + Kind).
 - Internet só é usada na **instalação** (baixar binários, imagens, banco de CVEs, providers Terraform, pacotes pip). Depois os exercícios funcionam offline. Detalhes em [docs/01-INSTALLATION.md](docs/01-INSTALLATION.md).
@@ -9,7 +9,7 @@ Laboratório **local e gratuito** para estudar, em um dia, os temas de uma entre
 ## Arquitetura
 
 ```
- seu computador (KDE Neon, Docker)
+ seu computador (Linux, Docker)
  ├─ Kind: cluster "lab"  (lab-control-plane + lab-worker)
  │    ├─ ns demo        → lab-app (2 pods, Service NodePort 30080, Ingress)
  │    ├─ ns monitoring  → Prometheus (descoberta de pods + cAdvisor)         http://127.0.0.1:9090
@@ -23,7 +23,6 @@ Todos os containers do lab usam a rede Docker `kind`, então se enxergam por nom
 
 ## Ferramentas (todas gratuitas/open source)
 Docker Engine + Compose · Kind · kubectl · Terraform · Jenkins LTS · Prometheus · Grafana · Loki · Tempo · OpenTelemetry (SDK no app) · Grafana Alloy · SonarQube Community Build · Trivy · Python/Flask (app demo).
-Datadog, SonarCloud, Snyk, AWS e Azure **não são usados** (exigem conta); há substitutos locais e documentação comparativa (veja "Limitações").
 
 ## Pré-requisitos
 KDE Neon (Ubuntu 24.04), 16 GB RAM, ~25 GB livres em disco, usuário no grupo `docker`. Verifique tudo com:
