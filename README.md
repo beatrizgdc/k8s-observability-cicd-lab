@@ -42,13 +42,22 @@ KDE Neon (Ubuntu 24.04), 16 GB RAM, ~25 GB livres em disco, usuário no grupo `d
 ```
 **RAM aproximada por grupo:** k8s ~1,5 GB · observability ~0,7 GB · cicd ~1,2 GB · security ~2,5 GB. Para estudar Kubernetes + troubleshooting você só precisa de **k8s** (+ observability para Golden Signals). Se faltar RAM: `LAB_NODES=1 ./lab.sh start k8s` (cluster de 1 node) e suba security só quando for estudar Sonar.
 
-Imagens:
-<img width="1655" height="615" alt="image" src="https://github.com/user-attachments/assets/d8c0e297-e29b-44f1-a800-15941d38daa5" />
-<img width="1660" height="187" alt="image" src="https://github.com/user-attachments/assets/71890005-949c-4773-b606-9aec7cd6a3c3" />
-<img width="1311" height="307" alt="image" src="https://github.com/user-attachments/assets/c6c1d875-d854-410b-8872-00f07a87bd15" />
-<img width="910" height="170" alt="image" src="https://github.com/user-attachments/assets/d49cd801-305b-4b50-a88e-4173afe5430c" />
-<img width="1668" height="486" alt="image" src="https://github.com/user-attachments/assets/2c674348-f983-4025-b3a9-2a015ddb4769" />
-<img width="713" height="84" alt="image" src="https://github.com/user-attachments/assets/6087d62e-f100-4166-b7d0-7bf2017c5442" />
+<details>
+<summary>Imagens: iniciando o lab</summary>
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/d8c0e297-e29b-44f1-a800-15941d38daa5" />
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/71890005-949c-4773-b606-9aec7cd6a3c3" />
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/c6c1d875-d854-410b-8872-00f07a87bd15" />
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/d49cd801-305b-4b50-a88e-4173afe5430c" />
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/2c674348-f983-4025-b3a9-2a015ddb4769" />
+
+<img width="713" alt="image" src="https://github.com/user-attachments/assets/6087d62e-f100-4166-b7d0-7bf2017c5442" />
+
+</details>
 
 
 ## Como parar
@@ -58,11 +67,16 @@ Imagens:
 ./lab.sh reset                    # volta o namespace demo ao padrão e remove incidentes (pede confirmação)
 ./lab.sh cleanup                  # apaga cluster e containers (pede confirmação); --volumes também apaga dados
 ```
-Imagens:
+<details>
+<summary>Imagens: parando o lab</summary>
 
-<img width="635" height="84" alt="image" src="https://github.com/user-attachments/assets/06a00333-2cab-41ed-ad95-221f14a4c771" />
-<img width="635" height="117" alt="image" src="https://github.com/user-attachments/assets/b874c662-1c54-49ce-8a69-f82ff6e8b59f" />
-<img width="691" height="169" alt="image" src="https://github.com/user-attachments/assets/ef6cd331-d1fc-43ae-8b10-7953eb2b5d8b" />
+<img width="635" alt="image" src="https://github.com/user-attachments/assets/06a00333-2cab-41ed-ad95-221f14a4c771" />
+
+<img width="635" alt="image" src="https://github.com/user-attachments/assets/b874c662-1c54-49ce-8a69-f82ff6e8b59f" />
+
+<img width="691" alt="image" src="https://github.com/user-attachments/assets/ef6cd331-d1fc-43ae-8b10-7953eb2b5d8b" />
+
+</details>
 
 ## Como verificar se está tudo funcionando
 ```bash
@@ -73,11 +87,16 @@ curl -s http://127.0.0.1:3000/api/health                   # Grafana
 ./lab.sh urls                                              # todos os endereços e credenciais locais
 ```
 
-Imagens:
+<details>
+<summary>Imagens: verificação</summary>
 
-<img width="645" height="337" alt="image" src="https://github.com/user-attachments/assets/cc34fbd5-1a63-4f7d-ac8c-4e183643201b" />
-<img width="1387" height="150" alt="image" src="https://github.com/user-attachments/assets/6a1dbbe1-40cb-4c7d-9534-4464d16aaed0" />
-<img width="829" height="98" alt="image" src="https://github.com/user-attachments/assets/d70d9dcb-167c-4fbf-bcc2-3086b88db9f0" />
+<img width="645" alt="image" src="https://github.com/user-attachments/assets/cc34fbd5-1a63-4f7d-ac8c-4e183643201b" />
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/6a1dbbe1-40cb-4c7d-9534-4464d16aaed0" />
+
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/d70d9dcb-167c-4fbf-bcc2-3086b88db9f0" />
+
+</details>
 
 
 ## Sequência recomendada de estudo (um dia)
