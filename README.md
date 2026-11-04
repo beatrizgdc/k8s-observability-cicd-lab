@@ -42,6 +42,15 @@ KDE Neon (Ubuntu 24.04), 16 GB RAM, ~25 GB livres em disco, usuário no grupo `d
 ```
 **RAM aproximada por grupo:** k8s ~1,5 GB · observability ~0,7 GB · cicd ~1,2 GB · security ~2,5 GB. Para estudar Kubernetes + troubleshooting você só precisa de **k8s** (+ observability para Golden Signals). Se faltar RAM: `LAB_NODES=1 ./lab.sh start k8s` (cluster de 1 node) e suba security só quando for estudar Sonar.
 
+Imagens:
+<img width="1655" height="615" alt="image" src="https://github.com/user-attachments/assets/d8c0e297-e29b-44f1-a800-15941d38daa5" />
+<img width="1660" height="187" alt="image" src="https://github.com/user-attachments/assets/71890005-949c-4773-b606-9aec7cd6a3c3" />
+<img width="1311" height="307" alt="image" src="https://github.com/user-attachments/assets/c6c1d875-d854-410b-8872-00f07a87bd15" />
+<img width="910" height="170" alt="image" src="https://github.com/user-attachments/assets/d49cd801-305b-4b50-a88e-4173afe5430c" />
+<img width="1668" height="486" alt="image" src="https://github.com/user-attachments/assets/2c674348-f983-4025-b3a9-2a015ddb4769" />
+<img width="713" height="84" alt="image" src="https://github.com/user-attachments/assets/6087d62e-f100-4166-b7d0-7bf2017c5442" />
+
+
 ## Como parar
 ```bash
 ./lab.sh stop observability       # ou: k8s | cicd | security | all   (não apaga nada)
