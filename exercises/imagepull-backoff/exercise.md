@@ -33,6 +33,6 @@ Erro de digitação na tag da imagem.
 ## Modelo de RCA (resumo)
 Causa: tag errada. Prevenção: pipeline que gera a tag (não digitar), verificação de existência da imagem antes do deploy, tags imutáveis/digest.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. ErrImagePull vs ImagePullBackOff? 2. Como puxar de ECR/ACR privado? (imagePullSecrets, IAM/managed identity.)
 3. Por que evitar `latest`? 4. `imagePullPolicy` Always/IfNotPresent/Never?

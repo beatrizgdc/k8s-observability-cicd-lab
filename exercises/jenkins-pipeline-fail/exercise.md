@@ -44,7 +44,7 @@ Mudança na mensagem sem atualizar o teste que a valida.
 ## Modelo de RCA (resumo)
 Causa: commit sem teste correspondente. Detecção: CI. Prevenção: rodar testes localmente/pre-commit, PR obrigatório com CI verde.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. Diferença entre CI e CD? Onde o rollback entra?
 2. Como investigar uma pipeline que "funcionava ontem"? (diff de commits, versões de dependências, estado do agente/cache.)
 3. Declarative vs Scripted pipeline?

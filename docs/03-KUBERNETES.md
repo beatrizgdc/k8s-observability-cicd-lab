@@ -35,7 +35,7 @@ Formato de cada item: **finalidade · sintaxe · exemplo · resultado esperado**
 | `kubectl cluster-info` | endereços do API server e CoreDNS |
 | `kubectl get nodes -o wide` | 2 nodes `Ready` (control-plane e worker), versão, IP interno |
 | `kubectl get ns` | `default demo monitoring ingress-nginx kube-system ...` (+ `inc-*` nos exercícios) |
-| `kubectl api-resources` / `kubectl explain deploy.spec.strategy` | recursos existentes / documentação de campos (ótimo na entrevista!) |
+| `kubectl api-resources` / `kubectl explain deploy.spec.strategy` | recursos existentes / documentação de campos |
 
 ### Ver recursos (`get`)
 Sintaxe: `kubectl [-n NS | -A] get <tipo> [nome] [-o wide|yaml|json|jsonpath=...] [-l label] [-w]`
@@ -158,7 +158,7 @@ Sequência universal: `get pods -o wide` → `describe pod` → `logs [--previou
 | Segredos | Secret simples | Secrets + **Key Vault CSI driver** |
 | Custo | 0 | VMs dos nodes + LB + disco + logs |
 
-**O que é idêntico:** API do Kubernetes e **todos os comandos `kubectl`** deste documento, manifests (Deployment, Service, Probes, requests/limits), troubleshooting de pods, rollout/rollback. **O que muda:** como se cria/atualiza o cluster, rede de entrada (LB/Ingress), identidade (Entra ID/Managed Identity), storage, registry e observabilidade — é o assunto que a entrevista de AKS costuma cobrar (veja [09](09-CLOUD-AWS-AZURE.md)).
+**O que é idêntico:** API do Kubernetes e **todos os comandos `kubectl`** deste documento, manifests (Deployment, Service, Probes, requests/limits), troubleshooting de pods, rollout/rollback. **O que muda:** como se cria/atualiza o cluster, rede de entrada (LB/Ingress), identidade (Entra ID/Managed Identity), storage, registry e observabilidade — são os pontos que mais diferem entre local e AKS (veja [09](09-CLOUD-AWS-AZURE.md)).
 
 Comandos `az` equivalentes (apenas para conhecer; **não são executados no lab**):
 ```bash
@@ -168,7 +168,7 @@ az aks nodepool add -g rg-lab --cluster-name aks-lab -n pool2 --node-count 1
 az aks upgrade -g rg-lab -n aks-lab --kubernetes-version <versão>
 ```
 
-## 7. Perguntas de entrevista (com resposta curta)
+## 7. Perguntas de revisão (com resposta curta)
 1. **O que acontece no `kubectl apply`?** API server valida/grava no etcd → controllers criam ReplicaSet/Pods → scheduler escolhe node → kubelet baixa imagem e inicia.
 2. **Liveness vs readiness?** Liveness reinicia o container; readiness remove do balanceamento. Liveness agressiva demais derruba apps lentas.
 3. **Como fazer deploy sem downtime?** RollingUpdate com readiness correta, `maxUnavailable: 0`, PodDisruptionBudget, graceful shutdown.

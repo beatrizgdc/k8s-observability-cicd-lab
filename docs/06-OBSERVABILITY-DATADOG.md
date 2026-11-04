@@ -19,7 +19,7 @@ Pré-requisitos: `./lab.sh start k8s` e `./lab.sh start observability`. Gere tr�
 | **Traffic** | quanta demanda? | `sum by (path) (rate(http_requests_total[1m]))` | Traffic |
 | **Errors** | quanto falha? | `sum(rate(http_requests_total{status=~"5.."}[1m])) / sum(rate(http_requests_total[1m]))` | Errors (%) |
 | **Saturation** | quão cheio? | CPU: `rate(container_cpu_usage_seconds_total{container="app"}[1m])` e throttling `container_cpu_cfs_throttled_periods_total`; memória: `container_memory_working_set_bytes` vs `container_spec_memory_limit_bytes`; in-flight: `http_requests_in_flight` | Saturation |
-Dica de entrevista: diferencie **latência de sucesso e de erro** (um 500 rápido “melhora” a média) e use **percentis**.
+Dica: diferencie **latência de sucesso e de erro** (um 500 rápido “melhora” a média) e use **percentis**.
 Método relacionado: **RED** (Rate, Errors, Duration — serviços) e **USE** (Utilization, Saturation, Errors — recursos).
 
 ## 3. Os componentes do lab
@@ -74,7 +74,7 @@ O Datadog é uma plataforma SaaS que junta tudo isso. Os conceitos são os mesmo
 Como seria o mesmo incidente no Datadog (ex.: `http-500`): *Monitor* de taxa de erro dispara → página do serviço em **APM** mostra erros por endpoint → clique no *trace* com erro → botão para **logs correlacionados** do mesmo `trace_id` → *Deployment Tracking* mostra a `version` onde o erro começou → abre-se um *Incident* (Datadog Incident Management) para o RCA.
 Equivalências de consulta: PromQL `sum(rate(http_requests_total{status=~"5.."}[1m]))` ≈ Datadog `sum:trace.flask.request.errors{service:lab-app}.as_rate()`.
 
-## 6. Perguntas de entrevista
+## 6. Perguntas de revisão
 1. Monitoramento × observabilidade? 2. Por que percentis? 3. O que são labels/cardinalidade e por que alta cardinalidade é problema (memória no Prometheus, custo no Datadog)?
 4. Pull (Prometheus) × push (Datadog Agent/StatsD)? 5. Como reduzir ruído de alertas (for, agrupamento, SLO/burn rate, severidade)?
 6. Como correlacionar log e trace? (propagar `trace_id` no log.) 7. O que mede CPU throttling e por que `top` do node não mostra?

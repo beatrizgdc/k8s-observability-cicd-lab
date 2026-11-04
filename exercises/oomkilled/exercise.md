@@ -46,7 +46,7 @@ Aumentar o limit é **mitigação**. A correção real é achar por que o app pr
 ## Modelo de RCA (resumo)
 Causa: pico de memória > limit. Detecção: alerta `ContainerMemoryNearLimit` (>85% do limit) deveria ter avisado antes. Prevenção: alerta de saturação, teste de carga, requests = uso típico, limit = pico + margem.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. Qual a diferença entre request e limit de memória? (request = reserva p/ scheduling; limit = teto, estourou → OOMKilled.)
 2. Por que CPU acima do limit é "throttled" e memória é "killed"? (CPU é compressível; memória não.)
 3. O que é a QoS class (Guaranteed/Burstable/BestEffort) e como influencia evictions?

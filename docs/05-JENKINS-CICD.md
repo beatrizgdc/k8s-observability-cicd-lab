@@ -70,7 +70,7 @@ Para qualquer falha: `git -C .data/app-repo log --oneline` (o que mudou), `docke
 - Falhar rápido: lint/teste antes de build de imagem; scan antes de publicar; promover o **mesmo artefato** entre ambientes.
 - Deploy com verificação (`rollout status`, smoke test) e rollback automático; deploys por GitOps (Argo CD/Flux) como evolução.
 
-## 7. Perguntas de entrevista
+## 7. Perguntas de revisão
 1. Como o Jenkins escala? (agents efêmeros, Kubernetes plugin.) 2. Declarative × Scripted?
 3. Como fazer rollback automático? (post failure + `rollout undo`, ou promoção reversa/Git revert.) 4. Como evitar vazar segredos?
 5. Pipeline lenta: o que otimiza? (cache de dependências/camadas, paralelismo `parallel`, agents maiores.) 6. Webhook × polling? 7. Diferença entre Jenkins e GitHub Actions/Azure DevOps Pipelines?

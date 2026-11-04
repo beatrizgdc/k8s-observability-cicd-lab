@@ -92,7 +92,7 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 | sem credenciais | IAM role/profile | Service Principal / Managed Identity / Workload Identity federation (OIDC) |
 Exemplo (AKS, apenas leitura): bloco `resource "azurerm_kubernetes_cluster" "aks" { name=..., default_node_pool { node_count = 2 ... } identity { type = "SystemAssigned" } }`.
 
-## 8. Perguntas de entrevista
+## 8. Perguntas de revisão
 1. O que acontece se o state for perdido? (Terraform tenta recriar; usar `import`/backup/versionamento do bucket.)
 2. Como evitar dois `apply` simultâneos? (lock do backend.) 3. `plan` mostra recriação inesperada — o que fazer? (`lifecycle`, `ignore_changes`, revisar mudança de atributo imutável.)
 4. Diferença entre Terraform e Ansible/CloudFormation/Bicep? 5. Como tratar segredos e state sensível?

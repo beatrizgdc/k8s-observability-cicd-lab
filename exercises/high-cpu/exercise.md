@@ -42,7 +42,7 @@ Correção real: isolar trabalho pesado (fila/worker), limitar concorrência, ot
 ## Modelo de RCA (resumo)
 Causa: processamento CPU-bound sem proteção. Detecção: alerta de throttling. Prevenção: rate limit, limites de timeout, perf test, HPA.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. O que significa throttling? (CFS quota: o container só roda `limit` ms a cada 100 ms.)
 2. `top` do node mostra CPU baixa mas o pod está lento. Por quê? (throttling por limit.)
 3. Request vs limit de CPU: efeito no scheduling e na execução?

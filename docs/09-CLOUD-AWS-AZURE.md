@@ -56,7 +56,7 @@ aws eks update-kubeconfig --name meu-cluster --region us-east-1     # gera kubec
 az aks get-credentials -g rg -n meu-aks
 kubectl get nodes       # a partir daqui os comandos são os mesmos do doc 03
 ```
-**Entrevista:** “o que é gerenciado e o que é meu?” → control plane (etcd, API server, scheduler) é do provedor; **seus** são nodes (patch/upgrade/tamanho), rede, RBAC, manifests, add-ons, segurança de workloads.
+**Pergunta:** “o que é gerenciado e o que é meu?” → control plane (etcd, API server, scheduler) é do provedor; **seus** são nodes (patch/upgrade/tamanho), rede, RBAC, manifests, add-ons, segurança de workloads.
 
 ## 4. IAM × Microsoft Entra ID / RBAC
 | Conceito | AWS IAM | Azure |
@@ -118,7 +118,7 @@ Conceitos: **RPO** (quanto de dado posso perder) e **RTO** (quanto tempo posso f
 | Rollback de dados | — | não reverte automaticamente: migrations compatíveis, snapshot antes de mudanças |
 Regra de ouro: **rollback = redeploy da versão anterior conhecida-boa**, rápido, com health checks e métricas (Golden Signals) para decidir. Feature flags reduzem a necessidade.
 
-## 9. Perguntas de entrevista (AWS/Azure)
+## 9. Perguntas de revisão (AWS/Azure)
 1. Região × Availability Zone? (AZ = datacenter(s) isolados dentro da região; espalhe réplicas em ≥2 AZs.) 2. Security Group (stateful, só allow) × NACL (stateless, allow/deny)? NSG é stateful.
 3. Como um pod acessa o S3/Key Vault sem chave? (IRSA / Workload Identity.) 4. Como reduzir custo em EKS/AKS? (right-sizing, autoscaler, Spot, desligar ambientes.)
 5. Como o tráfego chega a um pod no AKS? (Internet → LB/App Gateway → Ingress → Service → Pod.) 6. Modelo de responsabilidade compartilhada?

@@ -46,7 +46,7 @@ Valor incorreto (`FAULT_ERROR_RATE=0.4`) publicado na configuração; a app o l�
 ## Modelo de RCA (resumo)
 Causa: configuração inválida em produção. Detecção: alerta HighErrorRate. Correção: rollback da config + restart. Prevenção: canary/rollout gradual, validação de config, SLO com burn-rate.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. Como diferenciar erro de aplicação (5xx) de erro do cliente (4xx)?
 2. Readiness OK e 500 alto: por que o K8s não resolve sozinho? (probe não cobre a lógica.)
 3. Por que mudar o ConfigMap não alterou o comportamento? (env vars só na criação do container; volume monta atualiza, env não.)

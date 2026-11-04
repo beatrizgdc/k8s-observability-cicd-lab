@@ -44,7 +44,7 @@ Latência artificial injetada por configuração (`FAULT_LATENCY_MS`), simulando
 ## Modelo de RCA (resumo)
 Causa: dependência/config lenta. Detecção: alerta p95. Prevenção: timeouts + circuit breaker, SLO de latência, tracing.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. Por que usar percentis e não média? (média esconde cauda.)
 2. Latência alta: como saber se é CPU, I/O, rede ou dependência?
 3. O que é um trace/span e quando é melhor que logs?

@@ -44,7 +44,7 @@ kubectl -n $NS get pod client-broken -o jsonpath='{.spec.dnsPolicy}{"\n"}'
 ## Modelo de RCA (resumo)
 Causa: configuração de DNS customizada incorreta. Prevenção: não sobrescrever dnsPolicy sem necessidade; teste de DNS no smoke test.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. Qual o FQDN de um Service? (`<svc>.<ns>.svc.cluster.local`.)
 2. O que o `ndots:5` provoca? (várias consultas com search domains antes do nome absoluto → latência.)
 3. Se o CoreDNS caísse, o que falharia? (descoberta por nome; IPs diretos continuam.)

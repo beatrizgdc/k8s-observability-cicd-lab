@@ -35,6 +35,6 @@ kubectl -n $NS get deploy bigapp -o jsonpath='{.spec.template.spec.containers[0]
 ## Modelo de RCA (resumo)
 Causa: requests mal dimensionados (unidade/valor). Em nuvem: o Cluster Autoscaler tentaria criar nodes (e falharia se nenhum tipo comportar). Prevenção: LimitRange/ResourceQuota, revisão de manifestos.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. O scheduler usa requests ou uso real? (requests.) 2. Pending por PVC: como diagnosticar?
 3. O que são taints/tolerations? 4. Como o Cluster Autoscaler/Karpenter reagem a Pending?

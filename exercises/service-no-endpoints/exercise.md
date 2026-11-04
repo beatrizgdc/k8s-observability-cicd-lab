@@ -43,7 +43,7 @@ O selector do Service (`app: webapp`) não casa com o label dos pods (`app: web`
 ## Modelo de RCA (resumo)
 Causa: erro de digitação em manifesto. Prevenção: Helm/Kustomize com labels gerados, lint (`kubeconform`), smoke test pós-deploy.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. Como o Service encontra os pods? (selector → Endpoints/EndpointSlices.)
 2. Endpoints preenchidos mas "connection refused": o que verificar? (targetPort, a app escutando 0.0.0.0, NetworkPolicy.)
 3. Diferença entre ClusterIP, NodePort, LoadBalancer?

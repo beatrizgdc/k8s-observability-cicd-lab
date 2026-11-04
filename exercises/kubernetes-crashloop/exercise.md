@@ -51,7 +51,7 @@ kubectl -n inc-kubernetes-crashloop get pods
 - **Impacto:** serviço indisponível desde o deploy X. **Detecção:** alerta de pods não Ready.
 - **Causa:** variável DATABASE_URL não incluída no manifesto do deploy. **Correção:** adicionada. **Prevenção:** validação de config no CI, `kubectl diff`, checklist de variáveis obrigatórias.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. Qual a diferença entre `CrashLoopBackOff` e `Error`? (Error = última saída; CrashLoopBackOff = o kubelet está esperando o backoff antes de reiniciar.)
 2. Por que usar `--previous`? E se o container nunca chegou a iniciar? (Veja `describe` → Events.)
 3. Cite 4 causas de CrashLoopBackOff. (config ausente, comando errado, OOM, liveness probe falhando, dependência indisponível.)

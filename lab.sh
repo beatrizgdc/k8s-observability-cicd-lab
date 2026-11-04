@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# DevOps Interview Lab — script principal. Uso: ./lab.sh help
+# DevOps Lab — script principal. Uso: ./lab.sh help
 # Princípios: mostra cada comando real que executa; nunca apaga dados sem pedir confirmação.
 set -Eeuo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/scripts/lib.sh"
@@ -10,7 +10,7 @@ KIND_VERSION=v0.33.0; KUBECTL_VERSION=v1.37.2; TRIVY_VERSION=0.76.1
 SONAR_PASS='Lab-Admin-2026!'      # senha local do SonarQube do lab (nunca use em outro lugar)
 
 usage() { cat <<EOT
-${B}DevOps Interview Lab${N}
+${B}DevOps Lab${N}
 
   ./lab.sh check                      verifica dependências, RAM, disco e portas
   ./lab.sh install [--apt] [images]   baixa kind/kubectl/trivy em ./bin (sem sudo); --apt instala htop/traceroute (sudo)

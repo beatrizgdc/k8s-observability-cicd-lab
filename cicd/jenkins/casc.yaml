@@ -1,6 +1,6 @@
 # Jenkins Configuration as Code: usuário admin local e job "lab-app" já criado.
 jenkins:
-  systemMessage: "DevOps Interview Lab — Jenkins local (apenas estudo)"
+  systemMessage: "DevOps Lab — Jenkins local (apenas estudo)"
   numExecutors: 2
   securityRealm:
     local:

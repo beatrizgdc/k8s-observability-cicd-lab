@@ -1,4 +1,4 @@
-// Pipeline do DevOps Interview Lab. Roda dentro do container Jenkins (cicd/), que tem
+// Pipeline do DevOps Lab. Roda dentro do container Jenkins (cicd/), que tem
 // docker CLI, kubectl, kind, trivy e sonar-scanner instalados.
 pipeline {
   agent any

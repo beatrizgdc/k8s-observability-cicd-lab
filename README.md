@@ -1,6 +1,6 @@
-# DevOps Interview Lab
+# DevOps Lab
 
-Laboratório **local e gratuito** para estudar, temas de DevOps/SRE/Cloud: Linux, Kubernetes/AKS, troubleshooting, CI/CD (Jenkins), Terraform, observabilidade (Golden Signals), segurança/qualidade (SonarQube, Trivy, Snyk) e conceitos AWS/Azure.
+Laboratório **local e gratuito** para estudar temas de DevOps/SRE/Cloud: Linux, Kubernetes/AKS, troubleshooting, CI/CD (Jenkins), Terraform, observabilidade (Golden Signals), segurança/qualidade (SonarQube, Trivy, Snyk) e conceitos AWS/Azure.
 
 - Sem conta em nenhum serviço, sem cartão, sem nuvem. Tudo roda no seu computador (Docker + Kind).
 - Internet só é usada na **instalação** (baixar binários, imagens, banco de CVEs, providers Terraform, pacotes pip). Depois os exercícios funcionam offline. Detalhes em [docs/01-INSTALLATION.md](docs/01-INSTALLATION.md).

@@ -43,6 +43,6 @@ A v2.0.0 não passa nos health checks (bug de release).
 ## Modelo de RCA (resumo)
 Impacto: nenhum para usuários (v1 manteve o serviço); deploy bloqueado. Causa: bug na 2.0.0. Prevenção: testes de integração com health check, canary, `progressDeadlineSeconds` + alerta no pipeline.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. O que `maxSurge` e `maxUnavailable` controlam? 2. Como o `undo` funciona internamente? (reativa o ReplicaSet antigo.)
 3. Rollback de banco de dados: o mesmo? (não; migrations backward-compatible.) 4. Rolling vs blue/green vs canary?

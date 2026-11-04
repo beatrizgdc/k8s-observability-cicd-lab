@@ -44,6 +44,6 @@ Resultado real neste lab: CRITICAL 4 → 0; HIGH 55 → 45 (restam pacotes do De
 ## Modelo de RCA (resumo)
 Causa: base e libs sem atualização. Prevenção: scan no CI (Trivy/Snyk Container), Renovate/Dependabot, imagens mínimas (slim/distroless), rebuild periódico.
 
-## Perguntas de entrevista
+## Perguntas de revisão
 1. SAST vs SCA vs container scan? 2. O que é CVSS e por que severidade ≠ risco real (exploitability, exposição)?
 3. Como tratar uma CVE sem correção? 4. Por que não colocar segredo em `ENV`/camadas da imagem?

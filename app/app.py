@@ -1,5 +1,5 @@
 """
-Aplicação demo do DevOps Interview Lab (Flask).
+Aplicação demo do DevOps Lab (Flask).
 
 Foi escrita para ser lida em 5 minutos: cada endpoint existe para treinar
 um tipo de diagnóstico. Não é preciso entender Flask para usar o lab.

@@ -88,7 +88,7 @@ kubectl -n $NS get pod client-broken -o jsonpath='{.spec.dnsPolicy}{"\n"}'
 ### Modelo de RCA (resumo)
 Causa: configuração de DNS customizada incorreta. Prevenção: não sobrescrever dnsPolicy sem necessidade; teste de DNS no smoke test.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. Qual o FQDN de um Service? (`<svc>.<ns>.svc.cluster.local`.)
 2. O que o `ndots:5` provoca? (várias consultas com search domains antes do nome absoluto → latência.)
 3. Se o CoreDNS caísse, o que falharia? (descoberta por nome; IPs diretos continuam.)
@@ -142,7 +142,7 @@ Correção real: isolar trabalho pesado (fila/worker), limitar concorrência, ot
 ### Modelo de RCA (resumo)
 Causa: processamento CPU-bound sem proteção. Detecção: alerta de throttling. Prevenção: rate limit, limites de timeout, perf test, HPA.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. O que significa throttling? (CFS quota: o container só roda `limit` ms a cada 100 ms.)
 2. `top` do node mostra CPU baixa mas o pod está lento. Por quê? (throttling por limit.)
 3. Request vs limit de CPU: efeito no scheduling e na execução?
@@ -198,7 +198,7 @@ Latência artificial injetada por configuração (`FAULT_LATENCY_MS`), simulando
 ### Modelo de RCA (resumo)
 Causa: dependência/config lenta. Detecção: alerta p95. Prevenção: timeouts + circuit breaker, SLO de latência, tracing.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. Por que usar percentis e não média? (média esconde cauda.)
 2. Latência alta: como saber se é CPU, I/O, rede ou dependência?
 3. O que é um trace/span e quando é melhor que logs?
@@ -256,7 +256,7 @@ Valor incorreto (`FAULT_ERROR_RATE=0.4`) publicado na configuração; a app o l�
 ### Modelo de RCA (resumo)
 Causa: configuração inválida em produção. Detecção: alerta HighErrorRate. Correção: rollback da config + restart. Prevenção: canary/rollout gradual, validação de config, SLO com burn-rate.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. Como diferenciar erro de aplicação (5xx) de erro do cliente (4xx)?
 2. Readiness OK e 500 alto: por que o K8s não resolve sozinho? (probe não cobre a lógica.)
 3. Por que mudar o ConfigMap não alterou o comportamento? (env vars só na criação do container; volume monta atualiza, env não.)
@@ -301,7 +301,7 @@ Erro de digitação na tag da imagem.
 ### Modelo de RCA (resumo)
 Causa: tag errada. Prevenção: pipeline que gera a tag (não digitar), verificação de existência da imagem antes do deploy, tags imutáveis/digest.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. ErrImagePull vs ImagePullBackOff? 2. Como puxar de ECR/ACR privado? (imagePullSecrets, IAM/managed identity.)
 3. Por que evitar `latest`? 4. `imagePullPolicy` Always/IfNotPresent/Never?
 
@@ -355,7 +355,7 @@ Mudança na mensagem sem atualizar o teste que a valida.
 ### Modelo de RCA (resumo)
 Causa: commit sem teste correspondente. Detecção: CI. Prevenção: rodar testes localmente/pre-commit, PR obrigatório com CI verde.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. Diferença entre CI e CD? Onde o rollback entra?
 2. Como investigar uma pipeline que "funcionava ontem"? (diff de commits, versões de dependências, estado do agente/cache.)
 3. Declarative vs Scripted pipeline?
@@ -418,7 +418,7 @@ kubectl -n inc-kubernetes-crashloop get pods
 - **Impacto:** serviço indisponível desde o deploy X. **Detecção:** alerta de pods não Ready.
 - **Causa:** variável DATABASE_URL não incluída no manifesto do deploy. **Correção:** adicionada. **Prevenção:** validação de config no CI, `kubectl diff`, checklist de variáveis obrigatórias.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. Qual a diferença entre `CrashLoopBackOff` e `Error`? (Error = última saída; CrashLoopBackOff = o kubelet está esperando o backoff antes de reiniciar.)
 2. Por que usar `--previous`? E se o container nunca chegou a iniciar? (Veja `describe` → Events.)
 3. Cite 4 causas de CrashLoopBackOff. (config ausente, comando errado, OOM, liveness probe falhando, dependência indisponível.)
@@ -630,7 +630,7 @@ Aumentar o limit é **mitigação**. A correção real é achar por que o app pr
 ### Modelo de RCA (resumo)
 Causa: pico de memória > limit. Detecção: alerta `ContainerMemoryNearLimit` (>85% do limit) deveria ter avisado antes. Prevenção: alerta de saturação, teste de carga, requests = uso típico, limit = pico + margem.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. Qual a diferença entre request e limit de memória? (request = reserva p/ scheduling; limit = teto, estourou → OOMKilled.)
 2. Por que CPU acima do limit é "throttled" e memória é "killed"? (CPU é compressível; memória não.)
 3. O que é a QoS class (Guaranteed/Burstable/BestEffort) e como influencia evictions?
@@ -677,7 +677,7 @@ kubectl -n $NS get deploy bigapp -o jsonpath='{.spec.template.spec.containers[0]
 ### Modelo de RCA (resumo)
 Causa: requests mal dimensionados (unidade/valor). Em nuvem: o Cluster Autoscaler tentaria criar nodes (e falharia se nenhum tipo comportar). Prevenção: LimitRange/ResourceQuota, revisão de manifestos.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. O scheduler usa requests ou uso real? (requests.) 2. Pending por PVC: como diagnosticar?
 3. O que são taints/tolerations? 4. Como o Cluster Autoscaler/Karpenter reagem a Pending?
 
@@ -730,7 +730,7 @@ A v2.0.0 não passa nos health checks (bug de release).
 ### Modelo de RCA (resumo)
 Impacto: nenhum para usuários (v1 manteve o serviço); deploy bloqueado. Causa: bug na 2.0.0. Prevenção: testes de integração com health check, canary, `progressDeadlineSeconds` + alerta no pipeline.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. O que `maxSurge` e `maxUnavailable` controlam? 2. Como o `undo` funciona internamente? (reativa o ReplicaSet antigo.)
 3. Rollback de banco de dados: o mesmo? (não; migrations backward-compatible.) 4. Rolling vs blue/green vs canary?
 
@@ -783,7 +783,7 @@ O selector do Service (`app: webapp`) não casa com o label dos pods (`app: web`
 ### Modelo de RCA (resumo)
 Causa: erro de digitação em manifesto. Prevenção: Helm/Kustomize com labels gerados, lint (`kubeconform`), smoke test pós-deploy.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. Como o Service encontra os pods? (selector → Endpoints/EndpointSlices.)
 2. Endpoints preenchidos mas "connection refused": o que verificar? (targetPort, a app escutando 0.0.0.0, NetworkPolicy.)
 3. Diferença entre ClusterIP, NodePort, LoadBalancer?
@@ -839,7 +839,7 @@ Resultado real neste lab: CRITICAL 4 → 0; HIGH 55 → 45 (restam pacotes do De
 ### Modelo de RCA (resumo)
 Causa: base e libs sem atualização. Prevenção: scan no CI (Trivy/Snyk Container), Renovate/Dependabot, imagens mínimas (slim/distroless), rebuild periódico.
 
-### Perguntas de entrevista
+### Perguntas de revisão
 1. SAST vs SCA vs container scan? 2. O que é CVSS e por que severidade ≠ risco real (exploitability, exposição)?
 3. Como tratar uma CVE sem correção? 4. Por que não colocar segredo em `ENV`/camadas da imagem?
 

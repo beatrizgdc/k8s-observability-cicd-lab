@@ -91,7 +91,7 @@ commit ─► [secrets scan] ─► build ─► testes ─► [SAST: Sonar/Snyk
 ```
 No lab: Jenkins executa lint + Sonar (se ligado) + `trivy fs` + `trivy image` antes do deploy, com `TRIVY_FAIL_ON` controlando o gate.
 
-## 7. Perguntas de entrevista
+## 7. Perguntas de revisão
 1. SAST × SCA × DAST? 2. O que é um Quality Gate e o que fazer quando bloqueia o release? 3. “Shift left” — o que significa na prática?
 4. A CVE crítica não tem correção: o que fazer? (mitigar, WAF/config, remover componente, aceitar com prazo.) 5. Falso positivo: como tratar? (marcar como *Won’t fix/False positive* com justificativa, `.trivyignore`.)
 6. Por que scan de imagem *depois* de aprovado ainda importa? (CVEs novas; rebuilds agendados.) 7. SBOM: o que é e para que serve?
