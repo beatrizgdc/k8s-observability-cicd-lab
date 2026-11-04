@@ -1,0 +1,6 @@
+projectKey=vulnerable-sample
+serverUrl=http://127.0.0.1:9000
+serverVersion=26.10.0.133078
+dashboardUrl=http://127.0.0.1:9000/dashboard?id=vulnerable-sample
+ceTaskId=29217cb4-c442-462b-aea9-ddf5f0396059
+ceTaskUrl=http://127.0.0.1:9000/api/ce/task?id=29217cb4-c442-462b-aea9-ddf5f0396059

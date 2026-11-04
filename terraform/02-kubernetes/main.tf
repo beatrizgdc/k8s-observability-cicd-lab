@@ -34,7 +34,7 @@ resource "kubernetes_namespace" "this" {
 resource "kubernetes_config_map" "page" {
   metadata {
     name      = "page"
-    namespace = kubernetes_namespace.this.metadata[0].name     # dependência implícita
+    namespace = kubernetes_namespace.this.metadata[0].name # dependência implícita
   }
   data = { "index.html" = "<h1>Criado pelo Terraform</h1>" }
 }

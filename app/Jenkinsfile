@@ -51,8 +51,9 @@ pipeline {
           def up = sh(returnStatus: true, script: "curl -fsS ${SONAR_HOST}/api/system/status | grep -q UP") == 0
           if (fileExists(tokenFile) && up) {
             sh '''
-              sonar-scanner -Dsonar.host.url=$SONAR_HOST -Dsonar.token=$(cat /lab/secrets/sonar-token) \
-                            -Dsonar.qualitygate.wait=true -Dsonar.qualitygate.timeout=180
+              set +x   # não imprime o token no log
+              export SONAR_TOKEN=$(cat /lab/secrets/sonar-token)
+              sonar-scanner -Dsonar.host.url=$SONAR_HOST -Dsonar.qualitygate.wait=true -Dsonar.qualitygate.timeout=180
             '''
           } else {
             echo 'SonarQube indisponível (rode: ./lab.sh start security && ./lab.sh sonar-setup). Pulando análise Sonar; flake8 foi executado.'

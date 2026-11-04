@@ -1,4 +1,4 @@
   - role: worker
     extraMounts:
-      - hostPath: __LOGDIR__
+      - hostPath: __LOGDIR__/worker
         containerPath: /var/log/pods

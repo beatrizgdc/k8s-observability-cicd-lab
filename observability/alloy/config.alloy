@@ -1,26 +1,26 @@
 // Alloy: lê os logs dos pods (montados do node Kind) e envia ao Loki.
 local.file_match "pods" {
-  path_targets = [{ "__path__" = "/var/log/pods/*/*/*.log" }]
+  path_targets = [{ "__path__" = "/var/log/pods/*/*/*/*.log" }]
 }
 
-// /var/log/pods/<namespace>_<pod>_<uid>/<container>/<n>.log  ->  labels
+// /var/log/pods/<node>/<namespace>_<pod>_<uid>/<container>/<n>.log  ->  labels
 discovery.relabel "pods" {
   targets = local.file_match.pods.targets
   rule {
     source_labels = ["__path__"]
-    regex         = "/var/log/pods/([^_]+)_([^_]+)_[^/]+/([^/]+)/.*"
+    regex         = "/var/log/pods/[^/]+/([^_/]+)_([^_/]+)_[^/]+/([^/]+)/.*"
     replacement   = "$1"
     target_label  = "namespace"
   }
   rule {
     source_labels = ["__path__"]
-    regex         = "/var/log/pods/([^_]+)_([^_]+)_[^/]+/([^/]+)/.*"
+    regex         = "/var/log/pods/[^/]+/([^_/]+)_([^_/]+)_[^/]+/([^/]+)/.*"
     replacement   = "$2"
     target_label  = "pod"
   }
   rule {
     source_labels = ["__path__"]
-    regex         = "/var/log/pods/([^_]+)_([^_]+)_[^/]+/([^/]+)/.*"
+    regex         = "/var/log/pods/[^/]+/([^_/]+)_([^_/]+)_[^/]+/([^/]+)/.*"
     replacement   = "$3"
     target_label  = "container"
   }
@@ -46,5 +46,5 @@ loki.process "app" {
 }
 
 loki.write "default" {
-  endpoint { url = "http://lab-loki:3100/loki/api/push" }
+  endpoint { url = "http://lab-loki:3100/loki/api/v1/push" }
 }
