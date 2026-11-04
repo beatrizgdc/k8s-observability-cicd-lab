@@ -1,0 +1,22 @@
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    uid: prometheus
+    type: prometheus
+    access: proxy
+    url: http://lab-control-plane:30090      # NodePort do Prometheus no Kind
+    isDefault: true
+  - name: Loki
+    uid: loki
+    type: loki
+    access: proxy
+    url: http://lab-loki:3100
+    jsonData:
+      derivedFields: []
+  - name: Tempo
+    uid: tempo
+    type: tempo
+    access: proxy
+    url: http://lab-tempo:3200
+    jsonData:
+      tracesToLogsV2: { datasourceUid: loki }

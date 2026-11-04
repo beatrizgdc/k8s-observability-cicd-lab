@@ -1,0 +1,28 @@
+# Grupo "cicd": Jenkins em Docker, com acesso ao Docker do host (socket) e ao cluster Kind.
+name: lab-cicd
+services:
+  jenkins:
+    build: ./jenkins
+    image: lab-jenkins:local
+    container_name: lab-jenkins
+    user: "1000:1000"
+    group_add: ["${DOCKER_GID:?defina DOCKER_GID (o lab.sh faz isso)}"]    # permite usar /var/run/docker.sock
+    ports: ["127.0.0.1:8088:8080"]
+    environment:
+      KUBECONFIG: /lab/kubeconfig
+      JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:-admin}
+    volumes:
+      - jenkins-home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock       # ATENÇÃO: equivale a root no host; aceitável só em lab local
+      - ${LAB_DATA:?defina LAB_DATA}/app-repo:/srv/app-repo
+      - ${LAB_DATA}/kubeconfig-internal:/lab/kubeconfig:ro
+      - ${LAB_DATA}/trivy-cache:/trivy-cache
+      - ${LAB_DATA}/secrets:/lab/secrets:ro
+    mem_limit: 1200m
+    networks: [kind]
+networks:
+  kind:
+    name: kind
+    external: true
+volumes:
+  jenkins-home: {}      # preservado em stop/reset; só removido por 'cleanup' com confirmação

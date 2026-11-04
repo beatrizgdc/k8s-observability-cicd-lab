@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lab-app
+  namespace: demo
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: lab.localtest.me          # *.localtest.me resolve para 127.0.0.1 (DNS público); alternativa: curl -H 'Host: lab.localtest.me'
+      http:
+        paths:
+          - { path: /, pathType: Prefix, backend: { service: { name: lab-app, port: { number: 80 } } } }

@@ -1,0 +1,3 @@
+# Imagens de apoio (além das dos manifests) que o lab pré-carrega no Kind para não depender de internet depois.
+busybox:1.37
+nginx:1.27-alpine

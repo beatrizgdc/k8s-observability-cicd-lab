@@ -1,0 +1,400 @@
+{
+ "uid": "golden-signals",
+ "title": "Golden Signals \u2014 lab-app",
+ "schemaVersion": 39,
+ "version": 1,
+ "refresh": "10s",
+ "time": {
+  "from": "now-30m",
+  "to": "now"
+ },
+ "tags": [
+  "lab",
+  "golden-signals"
+ ],
+ "panels": [
+  {
+   "type": "row",
+   "title": "1. LATENCY \u2014 quanto tempo leva?",
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false,
+   "id": 1
+  },
+  {
+   "type": "timeseries",
+   "title": "Lat\u00eancia /api/work p50/p95/p99",
+   "gridPos": {
+    "x": 0,
+    "y": 1,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "s"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "histogram_quantile(0.5, sum by (le) (rate(http_request_duration_seconds_bucket{path=\"/api/work\"}[1m])))",
+     "legendFormat": "p50",
+     "refId": "A"
+    },
+    {
+     "expr": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{path=\"/api/work\"}[1m])))",
+     "legendFormat": "p95",
+     "refId": "B"
+    },
+    {
+     "expr": "histogram_quantile(0.99, sum by (le) (rate(http_request_duration_seconds_bucket{path=\"/api/work\"}[1m])))",
+     "legendFormat": "p99",
+     "refId": "C"
+    }
+   ],
+   "id": 2
+  },
+  {
+   "type": "timeseries",
+   "title": "Lat\u00eancia m\u00e9dia por path",
+   "gridPos": {
+    "x": 12,
+    "y": 1,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "s"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "sum by (path) (rate(http_request_duration_seconds_sum[1m])) / sum by (path) (rate(http_request_duration_seconds_count[1m]))",
+     "legendFormat": "{{path}}",
+     "refId": "A"
+    }
+   ],
+   "id": 3
+  },
+  {
+   "type": "row",
+   "title": "2. TRAFFIC \u2014 quanta demanda?",
+   "gridPos": {
+    "x": 0,
+    "y": 9,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false,
+   "id": 4
+  },
+  {
+   "type": "timeseries",
+   "title": "Requisi\u00e7\u00f5es por segundo por path",
+   "gridPos": {
+    "x": 0,
+    "y": 10,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "reqps"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "sum by (path) (rate(http_requests_total[1m]))",
+     "legendFormat": "{{path}}",
+     "refId": "A"
+    }
+   ],
+   "id": 5
+  },
+  {
+   "type": "timeseries",
+   "title": "Requisi\u00e7\u00f5es por segundo por pod",
+   "gridPos": {
+    "x": 12,
+    "y": 10,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "reqps"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "sum by (pod) (rate(http_requests_total[1m]))",
+     "legendFormat": "{{pod}}",
+     "refId": "A"
+    }
+   ],
+   "id": 6
+  },
+  {
+   "type": "row",
+   "title": "3. ERRORS \u2014 quanto falha?",
+   "gridPos": {
+    "x": 0,
+    "y": 18,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false,
+   "id": 7
+  },
+  {
+   "type": "timeseries",
+   "title": "Taxa de erro 5xx (%)",
+   "gridPos": {
+    "x": 0,
+    "y": 19,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percent"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "100 * sum(rate(http_requests_total{status=~\"5..\"}[1m])) / clamp_min(sum(rate(http_requests_total[1m])),0.001)",
+     "legendFormat": "% 5xx",
+     "refId": "A"
+    }
+   ],
+   "id": 8
+  },
+  {
+   "type": "timeseries",
+   "title": "Requisi\u00e7\u00f5es por status HTTP",
+   "gridPos": {
+    "x": 12,
+    "y": 19,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "reqps"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "sum by (status) (rate(http_requests_total[1m]))",
+     "legendFormat": "{{status}}",
+     "refId": "A"
+    }
+   ],
+   "id": 9
+  },
+  {
+   "type": "row",
+   "title": "4. SATURATION \u2014 qu\u00e3o cheio est\u00e1?",
+   "gridPos": {
+    "x": 0,
+    "y": 27,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false,
+   "id": 10
+  },
+  {
+   "type": "timeseries",
+   "title": "CPU por container (cores) vs limit",
+   "gridPos": {
+    "x": 0,
+    "y": 28,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=~\"demo|inc-.*\",container=\"app\"}[1m]))",
+     "legendFormat": "{{pod}}",
+     "refId": "A"
+    }
+   ],
+   "id": 11
+  },
+  {
+   "type": "timeseries",
+   "title": "CPU throttling (% per\u00edodos limitados)",
+   "gridPos": {
+    "x": 12,
+    "y": 28,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percent"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "100 * sum by (pod) (rate(container_cpu_cfs_throttled_periods_total{namespace=~\"demo|inc-.*\",container=\"app\"}[1m])) / clamp_min(sum by (pod) (rate(container_cpu_cfs_periods_total{namespace=~\"demo|inc-.*\",container=\"app\"}[1m])),0.001)",
+     "legendFormat": "{{pod}}",
+     "refId": "A"
+    }
+   ],
+   "id": 12
+  },
+  {
+   "type": "timeseries",
+   "title": "Mem\u00f3ria (working set) vs limit",
+   "gridPos": {
+    "x": 0,
+    "y": 36,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "bytes"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "container_memory_working_set_bytes{namespace=~\"demo|inc-.*\",container=\"app\"}",
+     "legendFormat": "{{pod}} uso",
+     "refId": "A"
+    },
+    {
+     "expr": "container_spec_memory_limit_bytes{namespace=~\"demo|inc-.*\",container=\"app\"} > 0",
+     "legendFormat": "{{pod}} limit",
+     "refId": "B"
+    }
+   ],
+   "id": 13
+  },
+  {
+   "type": "timeseries",
+   "title": "Requisi\u00e7\u00f5es em andamento (in-flight)",
+   "gridPos": {
+    "x": 12,
+    "y": 36,
+    "w": 12,
+    "h": 8
+   },
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "targets": [
+    {
+     "expr": "sum by (pod) (http_requests_in_flight)",
+     "legendFormat": "{{pod}}",
+     "refId": "A"
+    }
+   ],
+   "id": 14
+  },
+  {
+   "type": "row",
+   "title": "Logs (Loki)",
+   "gridPos": {
+    "x": 0,
+    "y": 44,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false,
+   "id": 15
+  },
+  {
+   "type": "logs",
+   "title": "Logs dos pods demo e inc-* (use o filtro de level)",
+   "gridPos": {
+    "x": 0,
+    "y": 45,
+    "w": 24,
+    "h": 10
+   },
+   "datasource": {
+    "type": "loki",
+    "uid": "loki"
+   },
+   "options": {
+    "enableLogDetails": true,
+    "sortOrder": "Descending"
+   },
+   "targets": [
+    {
+     "expr": "{namespace=~\"demo|inc-.*\"}",
+     "refId": "A"
+    }
+   ],
+   "id": 16
+  }
+ ],
+ "templating": {
+  "list": []
+ }
+}

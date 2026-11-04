@@ -1,0 +1,56 @@
+# Grupo "observability": Grafana + Loki + Tempo + Alloy (coletor de logs).
+# O Prometheus roda DENTRO do cluster (k8s/addons/monitoring.yaml).
+# Todos entram na rede docker "kind" para enxergar o cluster pelo nome (lab-control-plane).
+name: lab-obs
+services:
+  grafana:
+    image: grafana/grafana:13.2.5
+    container_name: lab-grafana
+    ports: ["127.0.0.1:3000:3000"]
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"      # lab local: sem login
+      GF_SECURITY_ADMIN_PASSWORD: "admin"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    mem_limit: 384m
+    networks: [kind]
+  loki:
+    image: grafana/loki:3.7.9
+    container_name: lab-loki
+    command: ["-config.file=/etc/loki/loki.yaml"]
+    ports: ["127.0.0.1:3100:3100"]
+    volumes: ["./loki/loki.yaml:/etc/loki/loki.yaml:ro", "loki-data:/loki"]
+    mem_limit: 384m
+    networks: [kind]
+  tempo:
+    image: grafana/tempo:2.10.10
+    container_name: lab-tempo
+    command: ["-config.file=/etc/tempo/tempo.yaml"]
+    ports: ["127.0.0.1:3200:3200"]
+    volumes: ["./tempo/tempo.yaml:/etc/tempo/tempo.yaml:ro", "tempo-data:/var/tempo"]
+    mem_limit: 256m
+    networks: [kind]
+  alloy:
+    image: grafana/alloy:v1.21.3
+    container_name: lab-alloy
+    command: ["run", "--server.http.listen-addr=0.0.0.0:12345", "--storage.path=/var/lib/alloy/data", "/etc/alloy/config.alloy"]
+    volumes:
+      - ./alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - ${LAB_KIND_LOGDIR:?defina LAB_KIND_LOGDIR (o lab.sh faz isso)}:/var/log/pods:ro
+      - alloy-data:/var/lib/alloy/data
+    mem_limit: 256m
+    networks: [kind]
+networks:
+  kind:
+    name: kind
+    external: true      # criada pelo Kind (ou pelo lab.sh); o compose nunca a remove
+volumes:
+  grafana-data: {}
+  loki-data: {}
+  tempo-data: {}
+  alloy-data: {}

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lab-app-config
+  namespace: demo
+data:
+  LOG_LEVEL: "info"
+  FAULT_ERROR_RATE: "0"      # 0.0 a 1.0 -> % de HTTP 500 em /api/work
+  FAULT_LATENCY_MS: "0"      # latência extra em /api/work
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: lab-app-secret
+  namespace: demo
+type: Opaque
+stringData:                    # valor de demonstração; NUNCA versione segredos reais
+  API_TOKEN: "token-de-exemplo-do-lab"

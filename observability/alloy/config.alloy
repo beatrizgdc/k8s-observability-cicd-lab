@@ -1,0 +1,50 @@
+// Alloy: lê os logs dos pods (montados do node Kind) e envia ao Loki.
+local.file_match "pods" {
+  path_targets = [{ "__path__" = "/var/log/pods/*/*/*.log" }]
+}
+
+// /var/log/pods/<namespace>_<pod>_<uid>/<container>/<n>.log  ->  labels
+discovery.relabel "pods" {
+  targets = local.file_match.pods.targets
+  rule {
+    source_labels = ["__path__"]
+    regex         = "/var/log/pods/([^_]+)_([^_]+)_[^/]+/([^/]+)/.*"
+    replacement   = "$1"
+    target_label  = "namespace"
+  }
+  rule {
+    source_labels = ["__path__"]
+    regex         = "/var/log/pods/([^_]+)_([^_]+)_[^/]+/([^/]+)/.*"
+    replacement   = "$2"
+    target_label  = "pod"
+  }
+  rule {
+    source_labels = ["__path__"]
+    regex         = "/var/log/pods/([^_]+)_([^_]+)_[^/]+/([^/]+)/.*"
+    replacement   = "$3"
+    target_label  = "container"
+  }
+  // ignora namespaces de sistema para não poluir
+  rule {
+    source_labels = ["namespace"]
+    regex         = "kube-system|local-path-storage|ingress-nginx|monitoring"
+    action        = "drop"
+  }
+}
+
+loki.source.file "pods" {
+  targets    = discovery.relabel.pods.output
+  forward_to = [loki.process.app.receiver]
+}
+
+loki.process "app" {
+  stage.cri {}
+  // o app escreve JSON; extraímos "level" como label para filtrar fácil
+  stage.json { expressions = { level = "level" } }
+  stage.labels { values = { level = "" } }
+  forward_to = [loki.write.default.receiver]
+}
+
+loki.write "default" {
+  endpoint { url = "http://lab-loki:3100/loki/api/push" }
+}

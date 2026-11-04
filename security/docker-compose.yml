@@ -1,0 +1,26 @@
+# Grupo "security": SonarQube Community Build (o mais pesado do lab: ~1,5-2 GB de RAM).
+name: lab-sec
+services:
+  sonarqube:
+    image: sonarqube:26.10.0.133078-community
+    container_name: lab-sonarqube
+    ports: ["127.0.0.1:9000:9000"]
+    environment:
+      SONAR_WEB_JAVAOPTS: "-Xmx512m -Xms128m"
+      SONAR_CE_JAVAOPTS: "-Xmx512m -Xms128m"
+      SONAR_SEARCH_JAVAOPTS: "-Xmx512m -Xms512m -XX:MaxDirectMemorySize=256m -Dnode.store.allow_mmap=false"
+      SONAR_TELEMETRY_ENABLE: "false"
+    volumes:
+      - sonar-data:/opt/sonarqube/data
+      - sonar-extensions:/opt/sonarqube/extensions
+      - sonar-logs:/opt/sonarqube/logs
+    mem_limit: 2500m
+    networks: [kind]
+networks:
+  kind:
+    name: kind
+    external: true
+volumes:
+  sonar-data: {}
+  sonar-extensions: {}
+  sonar-logs: {}

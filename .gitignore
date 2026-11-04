@@ -1,0 +1,8 @@
+# binários baixados por './lab.sh install' (grandes demais para o Git; são recriados)
+bin/
+# estado local do lab (tokens, logs do Kind, caches, repo do Jenkins)
+.data/
+.terraform/
+*.tfstate*
+__pycache__/
+.venv/

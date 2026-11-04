@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab-app
+  namespace: demo
+  labels: { app: lab-app }
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels: { app: lab-app }
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: { maxSurge: 1, maxUnavailable: 0 }   # nunca derruba pods bons antes dos novos ficarem Ready
+  template:
+    metadata:
+      labels: { app: lab-app }
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: app
+          image: lab-app:1.0.0
+          imagePullPolicy: IfNotPresent      # a imagem é carregada no Kind (kind load), não vem de registry
+          ports: [{ containerPort: 8080, name: http }]
+          envFrom:
+            - configMapRef: { name: lab-app-config }
+            - secretRef: { name: lab-app-secret }
+          env:
+            - { name: APP_VERSION, value: "1.0.0" }
+            - { name: OTEL_EXPORTER_OTLP_ENDPOINT, value: "http://lab-tempo:4318" }   # ignorado se o Tempo não estiver no ar
+          resources:
+            requests: { cpu: 25m, memory: 64Mi }
+            limits:   { cpu: 250m, memory: 192Mi }
+          readinessProbe:                    # decide se o pod recebe tráfego
+            httpGet: { path: /readyz, port: http }
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:                     # decide se o container deve ser reiniciado
+            httpGet: { path: /healthz, port: http }
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3

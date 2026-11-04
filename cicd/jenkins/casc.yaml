@@ -1,0 +1,28 @@
+# Jenkins Configuration as Code: usuário admin local e job "lab-app" já criado.
+jenkins:
+  systemMessage: "DevOps Interview Lab — Jenkins local (apenas estudo)"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "${JENKINS_ADMIN_PASSWORD:-admin}"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+unclassified:
+  location:
+    url: http://localhost:8088/
+jobs:
+  - script: >
+      pipelineJob('lab-app') {
+        description('Pipeline do app demo: Checkout > Build > Test > Code Quality > Security Scan > Docker Build > Deploy')
+        definition {
+          cpsScm {
+            scm { git { remote { url('/srv/app-repo') }; branch('*/main') } }
+            scriptPath('Jenkinsfile')
+            lightweight(false)
+          }
+        }
+      }
