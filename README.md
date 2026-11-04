@@ -58,6 +58,11 @@ Imagens:
 ./lab.sh reset                    # volta o namespace demo ao padrão e remove incidentes (pede confirmação)
 ./lab.sh cleanup                  # apaga cluster e containers (pede confirmação); --volumes também apaga dados
 ```
+Imagens:
+
+<img width="635" height="84" alt="image" src="https://github.com/user-attachments/assets/06a00333-2cab-41ed-ad95-221f14a4c771" />
+<img width="635" height="117" alt="image" src="https://github.com/user-attachments/assets/b874c662-1c54-49ce-8a69-f82ff6e8b59f" />
+<img width="691" height="169" alt="image" src="https://github.com/user-attachments/assets/ef6cd331-d1fc-43ae-8b10-7953eb2b5d8b" />
 
 ## Como verificar se está tudo funcionando
 ```bash
@@ -69,6 +74,7 @@ curl -s http://127.0.0.1:3000/api/health                   # Grafana
 ```
 
 Imagens:
+
 <img width="645" height="337" alt="image" src="https://github.com/user-attachments/assets/cc34fbd5-1a63-4f7d-ac8c-4e183643201b" />
 <img width="1387" height="150" alt="image" src="https://github.com/user-attachments/assets/6a1dbbe1-40cb-4c7d-9534-4464d16aaed0" />
 <img width="829" height="98" alt="image" src="https://github.com/user-attachments/assets/d70d9dcb-167c-4fbf-bcc2-3086b88db9f0" />
