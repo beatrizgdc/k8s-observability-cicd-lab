@@ -12,6 +12,9 @@ Execute os comandos no seu terminal (KDE Neon). Os exercícios guiados são `./l
 - **Interpretar:** os três números são a média de processos prontos para rodar em 1/5/15 min. Compare com `nproc` (12 nesta máquina): load > nº de CPUs = saturação. Se 1 min > 15 min, está piorando.
 - **Produção:** primeiro comando ao entrar num servidor lento.
 
+<img width="530" height="33" alt="image" src="https://github.com/user-attachments/assets/af604f9f-fadd-4e3d-a5be-cc59d1759dca" />
+
+
 ### `top` e `htop` — processos em tempo real
 - **Sintaxe:** `top` · `top -o %MEM` · `top -p PID` · `htop` (se instalado)
 - **Teclas do top:** `P` ordena por CPU, `M` por memória, `1` mostra cada núcleo, `H` threads, `k` mata, `q` sai.
@@ -19,20 +22,32 @@ Execute os comandos no seu terminal (KDE Neon). Os exercícios guiados são `./l
 - **Colunas:** `RES` memória residente real; `S` estado (R rodando, S dormindo, D espera I/O ininterrupta, Z zumbi).
 - **Exemplo de problema:** `exercise linux-cpu` → dois processos com ~100 %CPU.
 
+<img width="860" height="962" alt="image" src="https://github.com/user-attachments/assets/2a5b8c8f-4227-41b4-bf25-677bb6209b3a" />
+<img width="1652" height="962" alt="image" src="https://github.com/user-attachments/assets/adc19e00-4fa7-4a73-94a9-c162b435e8df" />
+
+
 ### `free` — memória
 - **Sintaxe:** `free -h` · **Exemplo:** `free -h`
 - **Resultado:** colunas `total used free shared buff/cache available`.
 - **Interpretar:** olhe **`available`** (o que dá para usar sem swap), não `free`. Cache de disco (`buff/cache`) é reutilizável. `Swap` cheio + `available` baixo = pressão de memória (risco de OOM killer: `journalctl -k | grep -i oom`).
+
+<img width="683" height="61" alt="image" src="https://github.com/user-attachments/assets/e4f2d15c-7650-474e-97ec-aa93a4c989ca" />
+
 
 ### `ps` — fotografia dos processos
 - **Sintaxe:** `ps aux` · `ps -eo pid,ppid,ni,pcpu,pmem,etime,cmd --sort=-pcpu | head`
 - **Exemplos:** `ps -fp 1234` (um PID) · `ps -ef --forest` (árvore) · `pgrep -af nome`
 - **Interpretar:** `ETIME` mostra há quanto tempo roda (um "processo novo" pode ser reinício em loop).
 
+<img width="504" height="95" alt="image" src="https://github.com/user-attachments/assets/dcc1aa17-89ba-47a0-a2d3-ec9c4feb3dd0" />
+
+
 ### `kill` / `pkill` — sinais
 - **Sintaxe:** `kill PID` (SIGTERM, 15: encerrar educadamente) · `kill -9 PID` (SIGKILL: não pode ser ignorado) · `kill -HUP PID` (recarregar config) · `pkill -f padrão`
 - **Regra:** sempre SIGTERM primeiro; `-9` não deixa o processo limpar (arquivos temporários, locks). Confirme o PID com `ps -fp` antes.
 - **Em containers:** `docker stop` envia SIGTERM e espera 10 s antes do SIGKILL — apps que ignoram SIGTERM demoram a parar.
+
+
 
 ## 2. Disco
 
