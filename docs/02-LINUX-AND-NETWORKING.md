@@ -108,6 +108,11 @@ ip -s link           # contadores de erros/drops por interface
 ```
 - **Interpretar:** sem `default via` = sem saída para fora. `state DOWN` = interface sem link. Erros/drops crescendo = problema físico/driver/MTU.
 
+<img width="1292" height="129" alt="image" src="https://github.com/user-attachments/assets/1317731d-d6fd-44df-9781-615f700acf9f" />
+<img width="663" height="110" alt="image" src="https://github.com/user-attachments/assets/65e5b40e-a798-4d76-8362-8d0b18547465" />
+<img width="645" height="50" alt="image" src="https://github.com/user-attachments/assets/d3237362-a346-498f-a413-ae860bb0500b" />
+<img width="956" height="680" alt="image" src="https://github.com/user-attachments/assets/d92c12a3-e990-4301-89dd-9c119ed718b7" />
+
 ### `ping` — alcance e latência
 `ping -c 4 <host>` · resultado: `64 bytes from ...: time=12.3 ms` e no final `% packet loss` e `rtt min/avg/max/mdev`. Perda > 0 ou `mdev` alto = instabilidade. `ping` bloqueado por firewall não prova queda. Teste primeiro o **IP** (rede) e depois o **nome** (DNS).
 
