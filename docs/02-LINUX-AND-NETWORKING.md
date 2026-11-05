@@ -142,6 +142,12 @@ netstat -tulpn                 # equivalente legado (net-tools)
 - **Interpretar `Local Address:Port`:** `127.0.0.1:5432` aceita só local; `0.0.0.0:80`/`*:80` aceita de qualquer lugar; `[::]` = IPv6. `Recv-Q` crescendo em LISTEN = aplicação não está aceitando conexões (backlog cheio).
 - **Exercício:** `./lab.sh exercise linux-port`.
 
+<img width="1557" height="214" alt="image" src="https://github.com/user-attachments/assets/48ac503c-fc71-4d51-8959-9839f7105eb9" />
+<img width="1577" height="278" alt="image" src="https://github.com/user-attachments/assets/6e66a925-964d-41fd-b3e8-360a72bffd8d" />
+<img width="519" height="160" alt="image" src="https://github.com/user-attachments/assets/610bb1d8-9411-42a4-86d4-566ee74b975c" />
+<img width="823" height="872" alt="image" src="https://github.com/user-attachments/assets/c66782df-b014-4539-9c5d-440c30ebb222" />
+
+
 ### `curl` e `wget` — HTTP
 ```bash
 curl -s http://127.0.0.1:30080/api/hello                       # corpo
