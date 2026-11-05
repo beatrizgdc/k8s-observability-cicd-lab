@@ -486,7 +486,7 @@ A aplicação para de gravar logs e dá erro de escrita. (O exercício usa um co
 docker exec lab-diskfull df -h /data                   # Use% alto
 docker exec lab-diskfull df -i /data                   # inodes (arquivos) — também podem esgotar
 docker exec lab-diskfull du -ah /data | sort -h | tail # maiores arquivos/diretórios
-docker exec lab-diskfull find /data -type f -size +5M
+docker exec lab-diskfull find /data -type f -size +5000k
 # no seu host, o mesmo raciocínio:  df -h ;  du -xh / --max-depth=1 2>/dev/null | sort -h | tail ;  sudo find / -xdev -size +500M
 ```
 **Como interpretar:** `df` diz *quanto* está usado por filesystem; `du` diz *onde*. `Use% 100` = cheio. Se `df` mostra espaço mas grava falha, olhe `df -i`. Arquivo apagado mas ainda aberto por processo não libera espaço (`lsof +L1`).

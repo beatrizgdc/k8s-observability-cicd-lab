@@ -249,11 +249,14 @@ cmd_cleanup() {
   say "cleanup removerá:"
   info "- cluster Kind '$CLUSTER' (nodes lab-control-plane/lab-worker)"
   info "- containers dos grupos observability, cicd, security e os logs em .data/kind-logs"
+  info "- containers e processos dos exercícios linux-* (lab-diskfull, lab-dnstest, lab-cpuhog, ...)"
   [[ -n "$vol" ]] && warn "- VOLUMES (Jenkins home, Sonar, Grafana, Loki, Tempo): dados serão PERDIDOS" || info "- volumes serão preservados (use --volumes para apagá-los)"
   info "- imagens/containers que NÃO são do lab (ex.: seus projetos) não são tocados"
   confirm "Confirmar?" || die "cancelado"
   cluster_exists && run kind delete cluster --name "$CLUSTER"
   for g in observability cicd security; do docker compose -f $g/docker-compose.yml down $vol 2>/dev/null || true; done
+  # sobras dos exercícios linux-* (cada reset é idempotente)
+  for ex in linux-cpu linux-disk linux-port linux-dns; do exercises/$ex/run.sh reset >/dev/null 2>&1 || true; done
   # os logs do Kind pertencem ao root (gravados pelo kubelet dentro do node): limpa via container descartável
   [[ -d "$LOGDIR" ]] && docker run --rm -v "$LOGDIR:/x" busybox:1.37 sh -c 'rm -rf /x/* 2>/dev/null' || true
   [[ -n "$vol" ]] && warn "Para apagar também .data/ (repo do Jenkins, tokens, caches): rm -rf .data  (comando manual, por segurança)"
