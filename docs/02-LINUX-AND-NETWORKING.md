@@ -55,11 +55,17 @@ Execute os comandos no seu terminal (KDE Neon). Os exercícios guiados são `./l
 - **Sintaxe:** `df -h` · `df -hT /var` · `df -i` (inodes)
 - **Interpretar:** `Use%` 100 = cheio. Se `df -h` mostra espaço mas grava falha → `df -i` (inodes esgotados por milhões de arquivos pequenos).
 
+<img width="776" height="53" alt="image" src="https://github.com/user-attachments/assets/b4ca415f-c640-4ea5-b1f8-d8cb4d1bdab0" />
+<img width="770" height="51" alt="image" src="https://github.com/user-attachments/assets/f9c9ab33-f8ab-44e9-93da-c1ba7c430d32" />
+
 ### `du` — quanto cada diretório ocupa
 - **Sintaxe:** `du -sh *` · `du -xh /var --max-depth=1 | sort -h | tail` · `du -ah . | sort -h | tail`
 - **Fluxo de "disco cheio":** `df -h` (qual filesystem?) → `du -xh <mount> --max-depth=1 | sort -h` (qual pasta?) → descer até achar o arquivo → `ls -lh`. 🔒 em `/var`.
 - **Armadilha:** arquivo apagado mas ainda aberto não libera espaço: `sudo lsof +L1` → reinicie o processo ou trunque (`: > arquivo`).
 - **Exercício:** `./lab.sh exercise linux-disk`.
+
+<img width="775" height="143" alt="image" src="https://github.com/user-attachments/assets/3bd6562c-1f83-4bb3-ba47-fb118878c826" />
+
 
 ## 3. Arquivos, busca e logs
 
